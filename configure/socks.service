@@ -1,6 +1,6 @@
 [Unit]
 Description=Python Proxy Luna
-Documentation=https://t.me/ianlunatic
+Documentation=https://t.me/babi
 After=network.target nss-lookup.target
 
 [Service]
