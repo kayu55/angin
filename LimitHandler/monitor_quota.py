@@ -6,14 +6,14 @@ import subprocess
 from pathlib import Path
 
 # Konfigurasi Telegram
-CHAT_ID_PATH = "/etc/lunatic/bot/notif/id"
-BOT_KEY_PATH = "/etc/lunatic/bot/notif/key"
+CHAT_ID_PATH = "/etc/aryapro/bot/notif/id"
+BOT_KEY_PATH = "/etc/aryapro/bot/notif/key"
 
 # Folder akun
 PROTOCOLS = ["vless", "vmess", "trojan"]
 
 # Log file
-LOG_PATH = "/var/log/lunatic_quota_monitor.log"
+LOG_PATH = "/var/log/aryapro_quota_monitor.log"
 
 # Notifikasi Telegram
 
@@ -83,13 +83,13 @@ def monitor():
     while True:
         time.sleep(5)
         for protocol in PROTOCOLS:
-            usage_path = f"/etc/lunatic/{protocol}/usage"
+            usage_path = f"/etc/aryapro/{protocol}/usage"
             users = Path(usage_path).glob("*")
             for file in users:
                 user = file.name
-                limit_path = f"/etc/lunatic/{protocol}/usage/{user}"
+                limit_path = f"/etc/aryapro/{protocol}/usage/{user}"
                 usage_file = f"/etc/limit/{protocol}/{user}"
-                device_limit_path = f"/etc/lunatic/{protocol}/ip/{user}"
+                device_limit_path = f"/etc/aryapro/{protocol}/ip/{user}"
 
                 # Ambil data penggunaan
                 downlink = get_downlink(user)
@@ -129,14 +129,14 @@ def monitor():
 
                         # Hapus dari config.json dan DB
                         subprocess.run(["sed", "-i", f"/^#.*ACC# {user} /d", "/etc/xray/config.json"])
-                        subprocess.run(["sed", "-i", f"/^### {user} /d", f"/etc/lunatic/{protocol}/.{protocol}.db"])
+                        subprocess.run(["sed", "-i", f"/^### {user} /d", f"/etc/aryapro/{protocol}/.{protocol}.db"])
 
                         # Hapus file terkait
                         for f in [
                             f"/etc/limit/{protocol}/{user}",
                             f"/etc/limit/{protocol}/quota/{user}",
-                            f"/etc/lunatic/{protocol}/usage/{user}",
-                            f"/etc/lunatic/{protocol}/detail/{user}.txt",
+                            f"/etc/aryapro/{protocol}/usage/{user}",
+                            f"/etc/aryapro/{protocol}/detail/{user}.txt",
                             f"/var/www/html/{protocol[:3]}-{user}.txt"
                         ]:
                             try:

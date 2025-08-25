@@ -17,8 +17,8 @@ chmod +x /usr/bin/monitor_quota.py
 chmod +x /usr/bin/monitor_autokill.py
 
 # Buat log file jika belum ada
-touch /var/log/lunatic_quota_monitor.log
-chmod 644 /var/log/lunatic_quota_monitor.log
+touch /var/log/aryapro_quota_monitor.log
+chmod 644 /var/log/aryapro_quota_monitor.log
 
 # Buat systemd service
 echo "⚙️ Membuat service systemd..."
@@ -32,8 +32,8 @@ Type=simple
 ExecStart=/usr/bin/env python3 /usr/bin/monitor_quota.py
 Restart=always
 RestartSec=10
-StandardOutput=append:/var/log/lunatic_quota_monitor.log
-StandardError=append:/var/log/lunatic_quota_monitor.log
+StandardOutput=append:/var/log/aryapro_quota_monitor.log
+StandardError=append:/var/log/aryapro_quota_monitor.log
 
 [Install]
 WantedBy=multi-user.target

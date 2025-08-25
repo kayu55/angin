@@ -7,14 +7,14 @@ import time
 
 # Path konfigurasi
 SERVICES = {
-    "trojan": "/etc/lunatic/trojan",
-    "vmess": "/etc/lunatic/vmess",
-    "vless": "/etc/lunatic/vless",
-    "ssh": "/etc/lunatic/ssh"
+    "trojan": "/etc/aryapro/trojan",
+    "vmess": "/etc/aryapro/vmess",
+    "vless": "/etc/aryapro/vless",
+    "ssh": "/etc/aryapro/ssh"
 }
 XRAY_ACCESS_LOG = "/var/log/xray/access.log"
-TELEGRAM_KEY_PATH = "/etc/lunatic/bot/notif/key"
-TELEGRAM_ID_PATH = "/etc/lunatic/bot/notif/id"
+TELEGRAM_KEY_PATH = "/etc/aryapro/bot/notif/key"
+TELEGRAM_ID_PATH = "/etc/aryapro/bot/notif/id"
 CHECK_INTERVAL = 10  # detik
 
 def load_telegram_credentials():
