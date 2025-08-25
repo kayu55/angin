@@ -34,8 +34,8 @@ export IP=$( curl -sS icanhazip.com )
 ARYAPRO="https://raw.githubusercontent.com/kayu55/angin/main/"
 
 function ADD_CEEF() {
-EMAILCF="Afitamebel@gmail.com"
-KEYCF="c7892fc1afa8bb535a286b67deba8be60ecd8"
+EMAILCF="Arista15oye@gmail.com"
+KEYCF="8ac7cc64b17616bc45c5117d6847f197b7763"
 echo "$EMAILCF" > /usr/bin/emailcf
 echo "$KEYCF" > /usr/bin/keycf
 }
@@ -316,11 +316,11 @@ TOOLS_SETUP() {
 DOMENS_SETUP() {
 clear
 # === CREDENTIAL CLOUDFLARE ===
-CF_ID="Afitamebel@gmail.com"
-CF_KEY="c7892fc1afa8bb535a286b67deba8be60ecd8"
+CF_ID="Arista15oye@gmail.com"
+CF_KEY="8ac7cc64b17616bc45c5117d6847f197b7763"
 
 # === DOMAIN UTAMA ===
-DOMAIN="blitar-nbc-group.biz.id"
+DOMAIN="aryanet.biz.id"
 IPVPS=$(curl -s ipv4.icanhazip.com)
 
 # === Generate Subdomain Random ===
