@@ -416,12 +416,12 @@ SSL_SETUP() {
 
 FODER_SETUP() {
 local main_dirs=(
-        "/etc/xray" "/var/lib/luna" "/etc/lunatic" "/etc/limit"
+        "/etc/xray" "/var/lib/aryapro" "/etc/aryapro" "/etc/limit"
         "/etc/vmess" "/etc/vless" "/etc/trojan" "/etc/ssh"
     )
     
-    local lunatic_subdirs=("vmess" "vless" "trojan" "ssh" "bot")
-    local lunatic_types=("usage" "ip" "detail")
+    local aryapro_subdirs=("vmess" "vless" "trojan" "ssh" "bot")
+    local aryapro_types=("usage" "ip" "detail")
 
     local protocols=("vmess" "vless" "trojan" "ssh")
 
@@ -429,9 +429,9 @@ local main_dirs=(
         mkdir -p "$dir"
     done
 
-    for service in "${lunatic_subdirs[@]}"; do
-        for type in "${lunatic_types[@]}"; do
-            mkdir -p "/etc/lunatic/$service/$type"
+    for service in "${aryapro_subdirs[@]}"; do
+        for type in "${aryapro_types[@]}"; do
+            mkdir -p "/etc/aryapro/$service/$type"
         done
     done
 
@@ -440,11 +440,11 @@ local main_dirs=(
     done
 
     local databases=(
-        "/etc/lunatic/vmess/.vmess.db"
-        "/etc/lunatic/vless/.vless.db"
-        "/etc/lunatic/trojan/.trojan.db"
-        "/etc/lunatic/ssh/.ssh.db"
-        "/etc/lunatic/bot/.bot.db"
+        "/etc/aryapro/vmess/.vmess.db"
+        "/etc/aryapro/vless/.vless.db"
+        "/etc/aryapro/trojan/.trojan.db"
+        "/etc/aryapro/ssh/.ssh.db"
+        "/etc/aryapro/bot/.bot.db"
     )
 
     for db in "${databases[@]}"; do
@@ -673,9 +673,9 @@ EOF
     systemctl enable --now trip
 
     # Pasang dan beri izin eksekusi untuk udp-mini
-    mkdir -p /usr/local/lunatic
-    wget -q -O /usr/local/lunatic/udp-mini "${ARYAPRO}configure/udp-mini"
-    chmod +x /usr/local/lunatic/udp-mini
+    mkdir -p /usr/local/aryapro
+    wget -q -O /usr/local/aryapro/udp-mini "${ARYAPRO}configure/udp-mini"
+    chmod +x /usr/local/aryapro/udp-mini
 
     # Download dan pasang 3 service UDP Mini berbeda (multi-instance)
     for i in 1 2 3; do
@@ -1056,7 +1056,7 @@ echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
 sysctl -p
 
 # ================================================
-#     LUNATIC SYSTEM - CRONJOBS & AUTOSETUP
+#     SYSTEM - CRONJOBS & AUTOSETUP
 # ================================================
 
 # === Cron: Auto-Expired Akun ===
