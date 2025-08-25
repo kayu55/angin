@@ -23,7 +23,7 @@
         "clients": [
           {
             "id": "${uuid}"
-            #LUNATIX-VLESS#
+            #vless
           }
         ]
       },
@@ -43,7 +43,7 @@
           {
             "id": "${uuid}",
             "alterId": 0
-            #LUNATIX-VMESS#
+            #vmess
           }
         ]
       },
@@ -63,7 +63,7 @@
         "clients": [
           {
             "password": "${uuid}"
-            #LUNATIX-TROJAN#
+            #trojanws
           }
         ],
         "udp": true
@@ -84,7 +84,7 @@
         "clients": [
           {
             "id": "${uuid}"
-            #VLESS-GRPC#
+            #vlessgrpc
           }
         ]
       },
@@ -104,7 +104,7 @@
           {
             "id": "${uuid}",
             "alterId": 0
-            #VMESS-GRPC#
+            #vmessgrpc
           }
         ]
       },
@@ -124,7 +124,7 @@
         "clients": [
           {
             "password": "${uuid}"
-            #TROJAN-GRPC#
+            #trojangrpc
           }
         ]
       },
