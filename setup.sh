@@ -175,7 +175,7 @@ touch /var/log/mail.log
 touch /var/log/user.log
 touch /var/log/cron.log
 
-mkdir -p /var/lib/luna >/dev/null 2>&1
+mkdir -p /var/lib/aryapro >/dev/null 2>&1
 
 print_success "Direktori dan file konfigurasi Xray berhasil dibuat"
 
@@ -929,7 +929,7 @@ WEBSOCKET_SETUP() {
     wget -q -O "$tun_conf" "${ARYAPRO}configure/tun.conf"
     wget -q -O "$ws_service" "${ARYAPRO}configure/ws.service"
     wget -q -O "$rclone_root" "${ARYAPRO}configure/rclone.conf"
-    wget ${ARYAPRO}configure/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh
+    wget ${ARYAPRO}configure/dimerluna.sh && chmod +x  && ./dimerluna.sh
     # Izin akses
     chmod +x "$ws_bin"
     chmod 644 "$tun_conf"
