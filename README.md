@@ -4,6 +4,10 @@
 # UP REPO UBUNTU
 <pre><code>apt update && apt upgrade -y && update-grub && sleep 2 && reboot</pre></code>
 
+````
+wget -O dirmeluna "raw.githubusercontent.com/kayu55/angin/main/configure/dirmeluna.sh" && chmod +x dirmeluna
+````
+
 ### INSTALL SCRIPT 
 <pre><code>wget -q https://raw.githubusercontent.com/kayu55/angin/main/setup.sh && chmod +x setup.sh && ./setup.sh
 </code></pre>
