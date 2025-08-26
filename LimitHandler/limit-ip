@@ -18,20 +18,20 @@ function vmip(){
 
 echo -n > /var/log/xray/access.log
 sleep 440
-data=( `ls /etc/lunatic/limit/vmess/ip`);
+data=( `ls /etc/aryapro/limit/vmess/ip`);
 
     for user in "${data[@]}"
     do
-        iplimit=$(cat /etc/lunatic/limit/vmess/ip/$user)
+        iplimit=$(cat /etc/aryapro/limit/vmess/ip/$user)
         ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
         cekcek=$(echo -e "$ehh" | wc -l);
         if [[ $cekcek -gt $iplimit ]]; then
-            exp=$(grep -w "^#vmeACC# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-                  sed -i "/^#vmeACC# $user $exp/,/^},{/d" /etc/xray/config.json
+            exp=$(grep -w "^### $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^### $user $exp/,/^},{/d" /etc/xray/config.json
                   sed -i "/^### $user $exp/d" /etc/vmess/.vmess.db
                   systemctl restart xray >> /dev/null 2>&1
                   jum2=$(cat /tmp/ipvmess.txt | wc -l)
-                  rm -rf /etc/lunatic/limit/vmess/ip/$user
+                  rm -rf /etc/aryapro/limit/vmess/ip/$user
                   send_log
                 else
             echo ""
@@ -43,20 +43,20 @@ function vlip(){
 #LIMITVLESSIP
 echo -n > /var/log/xray/access.log
 sleep 440
-data=( `ls /etc/lunatic/limit/vless/ip`);
+data=( `ls /etc/aryapro/limit/vless/ip`);
 
     for user in "${data[@]}"
     do
-        iplimit=$(cat /etc/lunatic/limit/vless/ip/$user)
+        iplimit=$(cat /etc/aryapro/limit/vless/ip/$user)
         ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
         cekcek=$(echo -e "$ehh" | wc -l);
         if [[ $cekcek -gt $iplimit ]]; then
-            exp=$(grep -w "^#vleACC# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-                  sed -i "/^#vleACC# $user $exp/,/^},{/d" /etc/xray/config.json
+            exp=$(grep -w "^#& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^#& $user $exp/,/^},{/d" /etc/xray/config.json
                   sed -i "/^### $user $exp/d" /etc/vless/.vless.db
                   systemctl restart xray >> /dev/null 2>&1
                   jum2=$(cat /tmp/ipvless.txt | wc -l)
-                  rm -rf /etc/lunatic/limit/vless/ip/$user
+                  rm -rf /etc/aryapro/limit/vless/ip/$user
                   send_log
                 else
             echo ""
@@ -68,20 +68,20 @@ function trip(){
 #LIMITIPTROJAN
 echo -n > /var/log/xray/access.log
 sleep 440
-data=( `ls /etc/lunatic/limit/trojan/ip`);
+data=( `ls /etc/aryapro/limit/trojan/ip`);
 
     for user in "${data[@]}"
     do
-        iplimit=$(cat /etc/lunatic/limit/trojan/ip/$user)
+        iplimit=$(cat /etc/aryapro/limit/trojan/ip/$user)
         ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
         cekcek=$(echo -e "$ehh" | wc -l);
         if [[ $cekcek -gt $iplimit ]]; then
-            exp=$(grep -w "^#troACC# $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-                  sed -i "/^#troACC# $user $exp/,/^},{/d" /etc/xray/config.json
+            exp=$(grep -w "^#! $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^#! $user $exp/,/^},{/d" /etc/xray/config.json
                   sed -i "/^### $user $exp/d" /etc/trojan/.trojan.db
                   systemctl restart xray >> /dev/null 2>&1
                   jum2=$(cat /tmp/iptrojan.txt | wc -l)
-                  rm -rf /etc/lunatic/limit/trojan/ip/$user
+                  rm -rf /etc/aryapro/limit/trojan/ip/$user
                   send_log
                 else
             echo ""
