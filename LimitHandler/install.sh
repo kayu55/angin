@@ -4,11 +4,11 @@ set -e
 
 # Download monitor-quota.py
 echo "✅ Downloading monitor_quota.py..."
-wget -O /usr/bin/monitor_quota.py https://raw.githubusercontent.com/kayu55/angin/main/limit_handler/monitor_quota.py
+wget -O /usr/bin/monitor_quota.py https://raw.githubusercontent.com/kayu55/angin/main/LimitHandler/monitor_quota.py
 
 # Download autokill.py
 echo "✅ Downloading monitor_autokill.py..."
-wget -O /usr/bin/monitor_autokill.py https://raw.githubusercontent.com/kayu55/angin/main/limit_handler/monitor_autokill.py
+wget -O /usr/bin/monitor_autokill.py https://raw.githubusercontent.com/kayu55/angin/main/LimitHandler/monitor_autokill.py
 
 # Set permission monitor_quota.py
 chmod +x /usr/bin/monitor_quota.py
