@@ -341,14 +341,14 @@ RECORD_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/
 
 # === Tambah / Update Record ===
 if [[ "$RECORD_ID" == "null" ]]; then
-  echo "➕ Menambahkan record baru: $RECORD"
+  echo "Menambahkan record baru: $RECORD"
   curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
        -H "X-Auth-Email: $CF_ID" \
        -H "X-Auth-Key: $CF_KEY" \
        -H "Content-Type: application/json" \
        --data "{\"type\":\"A\",\"name\":\"$RECORD\",\"content\":\"$IPVPS\",\"ttl\":120,\"proxied\":false}" > /dev/null
 else
-  echo "🔄 Mengupdate record lama: $RECORD"
+  echo "Mengupdate record lama: $RECORD"
   curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
        -H "X-Auth-Email: $CF_ID" \
        -H "X-Auth-Key: $CF_KEY" \
@@ -453,7 +453,7 @@ local main_dirs=(
     done
 
     touch /etc/.{ssh,vmess,vless,trojan}.db
-    echo "IP=" > /var/lib/luna/ipvps.conf
+    echo "IP=" > /var/lib/aryapro/ipvps.conf
 }
 
 XRAY_SETUP() {
@@ -1012,8 +1012,8 @@ MENU_SETUP() {
     apt update -y
     apt install -y unzip
 
-    wget https://raw.githubusercontent.com/kayu55/angin/main/feature/LUNAVPN
-    unzip LUNAVPN
+    wget https://raw.githubusercontent.com/kayu55/angin/main/feature/ARYANET
+    unzip ARYANET
     chmod +x menu/*
     mv menu/* /usr/local/sbin
     dos2unix /usr/local/sbin/welcome
@@ -1021,7 +1021,7 @@ MENU_SETUP() {
     rm -rf menu
     rm -rf menu.zip    
     # Bersihkan
-    rm -rf menu LUNAVPN
+    rm -rf menu ARYANET
 
     print_success "Menu berhasil dipasang"
 }
