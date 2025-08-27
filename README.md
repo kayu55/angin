@@ -33,9 +33,7 @@ wget -O dirmeluna "raw.githubusercontent.com/kayu55/angin/main/configure/dirmelu
 - OVPN SSL/TCP 1194
 - SLOWDNS 5300
 ```
-### Author
-```
-```
+
 ### BISA HUBUNGI
 
 
