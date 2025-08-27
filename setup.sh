@@ -175,7 +175,7 @@ touch /var/log/mail.log
 touch /var/log/user.log
 touch /var/log/cron.log
 
-mkdir -p /var/lib/aryapro >/dev/null 2>&1
+mkdir -p /var/lib/arya >/dev/null 2>&1
 
 print_success "Direktori dan file konfigurasi Xray berhasil dibuat"
 
@@ -416,7 +416,7 @@ SSL_SETUP() {
 
 FODER_SETUP() {
 local main_dirs=(
-        "/etc/xray" "/var/lib/aryapro" "/etc/aryapro" "/etc/limit"
+        "/etc/xray" "/var/lib/arya" "/etc/aryapro" "/etc/limit"
         "/etc/vmess" "/etc/vless" "/etc/trojan" "/etc/ssh"
     )
     
@@ -453,7 +453,7 @@ local main_dirs=(
     done
 
     touch /etc/.{ssh,vmess,vless,trojan}.db
-    echo "IP=" > /var/lib/aryapro/ipvps.conf
+    echo "IP=" > /var/lib/arya/ipvps.conf
 }
 
 XRAY_SETUP() {
