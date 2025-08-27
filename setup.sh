@@ -1167,31 +1167,6 @@ ENABLED_SERVICE() {
     print_success "Layanan Diaktifkan"
     clear
 }
-BOT_SHELL() {
-   echo -e "\e[92;1m install shellbot \e[0m"
-   wget https://raw.githubusercontent.com/kayu55/angin/main/LTbotVPN/SHELLBOT
-    unzip SHELLBOT
-    mv LTBOTVPN /usr/bin
-    chmod +x /usr/bin/LTBOTVPN/*
-    # HAPUS EXTRAK
-    rm -rf SHELLBOT
-      
-}
-REBUILD_INSTALL() {
-curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
-mv reinstall.sh /usr/bin
-chmod +x /usr/bin/reinstall.sh
-}
-
-function SET_DETEK_SSH() {
-detect_os() {
-  if [[ -f /etc/os-release ]]; then
-    source /etc/os-release
-    echo "$ID $VERSION_ID"
-  else
-    echo "Unknown"
-  fi
-}
 
 os_version=$(detect_os)
 if [[ "$os_version" =~ "ubuntu 24" ]]; then 
@@ -1277,8 +1252,6 @@ function RUN() {
     MENU_SETUP             # Pasang menu CLI
     BASHRC_PROFILE         # Update environment profile
     ENABLED_SERVICE        # Aktifkan semua service
-    BOT_SHELL
-    REBUILD_INSTALL
     SET_DETEK_SSH
     ADD_CEEF
 }
@@ -1296,6 +1269,7 @@ history -c
 echo "unset HISTFILE" >> /etc/profile
 
 rm -rf /root/menu
+rm -rf /root/setup
 rm -rf /root/*.zip
 rm -rf /root/*.sh
 rm -rf /root/LICENSE
