@@ -1168,6 +1168,16 @@ ENABLED_SERVICE() {
     clear
 }
 
+function SET_DETEK_SSH() {
+detect_os() {
+  if [[ -f /etc/os-release ]]; then
+    source /etc/os-release
+    echo "$ID $VERSION_ID"
+  else
+    echo "Unknown"
+  fi
+}
+
 os_version=$(detect_os)
 if [[ "$os_version" =~ "ubuntu 24" ]]; then 
   RSYSLOG_FILE="/etc/rsyslog.d/50-default.conf"
