@@ -466,7 +466,7 @@ XRAY_SETUP() {
     chown www-data:www-data "$domainSock_dir"
 
     # Install Xray Core
-    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 
     # Konfigurasi file dan service custom
     wget -q -O /etc/xray/config.json "${ARYAPRO}configure/config.json"
@@ -1073,7 +1073,7 @@ CRON
 
 # === Cron: Bersihkan Access Log Nginx & Xray Tiap Menit ===
 #echo "*/1 * * * * root echo -n > /var/log/nginx/access.log" > /etc/cron.d/log.nginx
-$echo "*/1 * * * * root echo -n > /var/log/xray/access.log" >> /etc/cron.d/log.xray
+#echo "*/1 * * * * root echo -n > /var/log/xray/access.log" >> /etc/cron.d/log.xray
 
 # === Restart Cron Service ===
 service cron restart
