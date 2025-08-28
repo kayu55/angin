@@ -466,7 +466,7 @@ XRAY_SETUP() {
     chown www-data:www-data "$domainSock_dir"
 
     # Install Xray Core
-    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 24.10.31
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
 
     # Konfigurasi file dan service custom
     wget -q -O /etc/xray/config.json "${ARYAPRO}configure/config.json"
