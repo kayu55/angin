@@ -1007,7 +1007,7 @@ MENU_SETUP() {
     unzip ARYANET
     chmod +x menu/*
     mv menu/* /usr/local/sbin
-    dos2unix /usr/local/sbin/welcome
+    dos2unix /usr/local/sbin/menu
     
     rm -rf menu
     rm -rf menu.zip    
@@ -1026,7 +1026,7 @@ if [ -f ~/.bashrc ]; then
 fi
 fi
 mesg n || true
-welcome
+menu
 EOF
 }
 
