@@ -105,11 +105,11 @@ NC="\e[0m" # No Color
 OK="[${GREEN}OK${NC}]"
 ERROR="[${RED}ERROR${NC}]"
 
-BIRU="\033[38;2;0;191;255m"
-HIJAU="\033[38;2;173;255;47m"
-PUTIH="\033[38;2;255;255;255m"
-CYANS="\033[38;2;35;235;195m"
-GOLD="\033[38;2;255;215;0m"
+BIRU="\033[0;34m"
+HIJAU="\033[0;32m"
+PUTIH="\033[0;37m"
+CYANS="\033[0;36m"
+GOLD="\033[0;37m"
 RESET="\033[0m"
 # =========================[ FUNGSI UTILITAS ]=========================
 
@@ -687,15 +687,6 @@ EOF
     print_success "File Quota Autokill & UDP Services berhasil diinstal."
 }
 
-SLOWDNS_SETUP(){
-clear
-print_install "Memasang modul SlowDNS Server"
-wget -q -O /tmp/nameserver "${ARYAPRO}configure/nameserver" >/dev/null 2>&1
-chmod +x /tmp/nameserver
-bash /tmp/nameserver | tee /root/install.log
-print_success "SlowDNS"
-}
-
 
 # ========================================
 # Fungsi: Install dan Konfigurasi SSHD
@@ -929,7 +920,7 @@ WEBSOCKET_SETUP() {
     wget -q -O "$tun_conf" "${ARYAPRO}configure/tun.conf"
     wget -q -O "$ws_service" "${ARYAPRO}configure/ws.service"
     wget -q -O "$rclone_root" "${ARYAPRO}configure/rclone.conf"
-    wget ${ARYAPRO}configure/dimerluna.sh && chmod +x  && ./dimerluna.sh
+    wget ${ARYAPRO}configure/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh
     # Izin akses
     chmod +x "$ws_bin"
     chmod 644 "$tun_conf"
