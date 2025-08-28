@@ -1035,7 +1035,7 @@ if [ -f ~/.bashrc ]; then
 fi
 fi
 mesg n || true
-welcome
+menu
 EOF
 }
 
@@ -1223,7 +1223,6 @@ fi
 
 # Set permissions untuk file log
 set_permissions
-}
 
 # ==========================================
 # Function: instal
