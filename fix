@@ -22,20 +22,20 @@ printf "${BIRU}─────────────────────�
 echo -e ""
 read -p " Enter " 
 
-    clear
-    print_install "Memasang Service Limit Quota"
+clear
+print_install "Memasang Service Limit Quota"
 
     # Download dan jalankan install.sh untuk setup awal
-    wget https://raw.githubusercontent.com/kayu55/angin/main/LimitHandler/install.sh && chmod +x install.sh && ./install.sh
+wget https://raw.githubusercontent.com/kayu55/angin/main/LimitHandler/install.sh && chmod +x install.sh && ./install.sh
 
     # Download file limit-ip ke /usr/bin/
-    cd
-    wget -q -O /usr/bin/limit-ip "${ARYAPRO}LimitHandler/limit-ip"
-    chmod +x /usr/bin/limit-ip
-    sed -i 's/\r//' /usr/bin/limit-ip
+cd
+wget -q -O /usr/bin/limit-ip "https://raw.githubusercontent.com/kayu55/angin/main/LimitHandler/limit-ip"
+chmod +x /usr/bin/limit-ip
+sed -i 's/\r//' /usr/bin/limit-ip
 
     # Buat dan aktifkan systemd service untuk VMess IP limit
-    cat >/etc/systemd/system/vmip.service << EOF
+cat >/etc/systemd/system/vmip.service << EOF
 [Unit]
 Description=VMess IP Limiter
 After=network.target
@@ -48,12 +48,11 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
-
-    systemctl daemon-reload
-    systemctl enable --now vmip
+systemctl daemon-reload
+ systemctl enable --now vmip
 
     # Buat dan aktifkan service untuk VLESS IP limit
-    cat >/etc/systemd/system/vlip.service << EOF
+cat >/etc/systemd/system/vlip.service << EOF
 [Unit]
 Description=VLESS IP Limiter
 After=network.target
@@ -67,11 +66,11 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
-    systemctl daemon-reload
-    systemctl enable --now vlip
+systemctl daemon-reload
+systemctl enable --now vlip
 
     # Buat dan aktifkan service untuk Trojan IP limit
-    cat >/etc/systemd/system/trip.service << EOF
+cat >/etc/systemd/system/trip.service << EOF
 [Unit]
 Description=Trojan IP Limiter
 After=network.target
@@ -84,7 +83,6 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
-
-    systemctl daemon-reload
-    systemctl enable --now trip
+systemctl daemon-reload
+systemctl enable --now trip
 exec bash
