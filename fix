@@ -21,9 +21,9 @@ echo -e "\033[0;35m       FIX LIMIT KUOTA IP       \033[0m"
 printf "${BIRU}────────────────────────────────────────${RESET}\n"
 echo -e ""
 read -p " Enter " 
-
+fi
 clear
-LIMIT_HANDLER() {
+#LIMIT_HANDLER() {
     clear
     print_install "Memasang Service Limit Quota"
 
@@ -89,4 +89,7 @@ EOF
 
     systemctl daemon-reload
     systemctl enable --now trip
+    
+    
+    
 exec bash
