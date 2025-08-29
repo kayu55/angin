@@ -164,7 +164,6 @@ mkdir -p /etc/xray
 curl -s ifconfig.me > /etc/xray/ipvps
 touch /etc/xray/domain
 
-fi
 mkdir -p /usr/bin
 rm -fr /usr/local/bin/xray
 rm -fr /etc/nginx
