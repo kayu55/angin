@@ -19,12 +19,9 @@ RESET="\033[0m"
 
 
 printf "${BIRU}────────────────────────────────────────${RESET}\n"
-echo -e "\033[0;35m           REBUILD FOR IN VPS        ${RESET}"
+echo -e "\033[0;37m           REBUILD FOR IN VPS        ${RESET}"
 printf "${BIRU}────────────────────────────────────────${RESET}\n"
-echo -e "${HIJAU} -${CYANS} Tidak Di sarankan vps Digital Ocean -${RESET}"
-echo -e "${HIJAU} -${CYANS} Rebuild Ke Debian 10 dan ubuntu 20 ${RESET}"
-echo -e "${HIJAU} -${CYANS} Dari Ubuntu harus ke Ubuntu lagi ${RESET}"
-echo -e "${HIJAU} -${CYANS} Dari Debian harus ke Debian lagi ${RESET}"
+
 echo -e ""
 echo -e "${HIJAU} 1) Ubuntu 20 ${GOLD}Recomended${RESET}"
 echo -e "${HIJAU} 2) Ubuntu 22 ${GOLD}Recomended${RESET}"
