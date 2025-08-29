@@ -175,7 +175,7 @@ touch /var/log/mail.log
 touch /var/log/user.log
 touch /var/log/cron.log
 
-mkdir -p /var/lib/aris >/dev/null 2>&1
+mkdir -p /var/lib/LT >/dev/null 2>&1
 
 print_success "Direktori dan file konfigurasi Xray berhasil dibuat"
 
@@ -416,7 +416,7 @@ SSL_SETUP() {
 
 FODER_SETUP() {
 local main_dirs=(
-        "/etc/xray" "/var/lib/aris" "/etc/aryapro" "/etc/limit"
+        "/etc/xray" "/var/lib/LT" "/etc/aryapro" "/etc/limit"
         "/etc/vmess" "/etc/vless" "/etc/trojan" "/etc/ssh"
     )
     
@@ -453,7 +453,7 @@ local main_dirs=(
     done
 
     touch /etc/.{ssh,vmess,vless,trojan}.db
-    echo "IP=" > /var/lib/aris/ipvps.conf
+    echo "IP=" > /var/lib/LT/ipvps.conf
 }
 
 XRAY_SETUP() {
@@ -1072,8 +1072,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 CRON
 
 # === Cron: Bersihkan Access Log Nginx & Xray Tiap Menit ===
-#echo "*/1 * * * * root echo -n > /var/log/nginx/access.log" > /etc/cron.d/log.nginx
-#echo "*/1 * * * * root echo -n > /var/log/xray/access.log" >> /etc/cron.d/log.xray
+echo "*/1 * * * * root echo -n > /var/log/nginx/access.log" > /etc/cron.d/log.nginx
+echo "*/1 * * * * root echo -n > /var/log/xray/access.log" >> /etc/cron.d/log.xray
 
 # === Restart Cron Service ===
 service cron restart
@@ -1150,7 +1150,7 @@ ENABLED_SERVICE() {
     systemctl restart dropbear
     systemctl restart ws
     systemctl restart ssh
-    systemctl restart socks
+    #systemctl restart socks
     systemctl restart vlip
     systemctl restart vmip
     systemctl restart trip
@@ -1275,6 +1275,7 @@ rm -rf /root/*.sh
 rm -rf /root/LICENSE
 rm -rf /root/README.md
 rm -rf /root/domain
+rm -rf /root/setup.sh
 
 # ==========================================
 # Pesan Sukses
