@@ -164,6 +164,19 @@ mkdir -p /etc/xray
 curl -s ifconfig.me > /etc/xray/ipvps
 touch /etc/xray/domain
 
+fi
+mkdir -p /usr/bin
+rm -fr /usr/local/bin/xray
+rm -fr /etc/nginx
+rm -fr /var/lib/arya/
+rm -fr /usr/bin/xray
+rm -fr /etc/xray
+rm -fr /usr/local/etc/xray
+mkdir -p /etc/nginx
+mkdir -p /var/lib/arya/
+mkdir -p /usr/bin/xray
+mkdir -p /etc/xray
+mkdir -p /usr/local/etc/xray
 mkdir -p /var/log/xray
 chown www-data:www-data /var/log/xray
 chmod +x /var/log/xray
@@ -175,7 +188,6 @@ touch /var/log/mail.log
 touch /var/log/user.log
 touch /var/log/cron.log
 
-mkdir -p /var/lib/LT >/dev/null 2>&1
 
 print_success "Direktori dan file konfigurasi Xray berhasil dibuat"
 
@@ -416,7 +428,7 @@ SSL_SETUP() {
 
 FODER_SETUP() {
 local main_dirs=(
-        "/etc/xray" "/var/lib/LT" "/etc/aryapro" "/etc/limit"
+        "/etc/xray" "/var/lib/arya" "/etc/aryapro" "/etc/limit"
         "/etc/vmess" "/etc/vless" "/etc/trojan" "/etc/ssh"
     )
     
@@ -453,7 +465,7 @@ local main_dirs=(
     done
 
     touch /etc/.{ssh,vmess,vless,trojan}.db
-    echo "IP=" > /var/lib/LT/ipvps.conf
+    echo "IP=" > /var/lib/arya/ipvps.conf
 }
 
 XRAY_SETUP() {
