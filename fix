@@ -1,0 +1,90 @@
+#!/bin/bash
+# ==========================================
+# Color
+RED='\033[0;31m'
+NC='\033[0m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHT='\033[0;37m'
+# ==========================================
+BIRU="\033[0;34m"
+HIJAU="\033[0;32m"
+PUTIH="\033[0;37m"
+CYANS="\033[0;36m"
+GOLD="\033[0;33m"
+RESET="\033[0m"
+printf "${BIRU}────────────────────────────────────────${RESET}\n"
+echo -e "\033[0;35m       FIX LIMIT KUOTA IP       \033[0m"
+printf "${BIRU}────────────────────────────────────────${RESET}\n"
+echo -e ""
+read -p " Enter " 
+
+    clear
+    print_install "Memasang Service Limit Quota"
+
+    # Download dan jalankan install.sh untuk setup awal
+    wget https://raw.githubusercontent.com/kayu55/angin/main/LimitHandler/install.sh && chmod +x install.sh && ./install.sh
+
+    # Download file limit-ip ke /usr/bin/
+    cd
+    wget -q -O /usr/bin/limit-ip "${ARYAPRO}LimitHandler/limit-ip"
+    chmod +x /usr/bin/limit-ip
+    sed -i 's/\r//' /usr/bin/limit-ip
+
+    # Buat dan aktifkan systemd service untuk VMess IP limit
+    cat >/etc/systemd/system/vmip.service << EOF
+[Unit]
+Description=VMess IP Limiter
+After=network.target
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/usr/bin/limit-ip vmip
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable --now vmip
+
+    # Buat dan aktifkan service untuk VLESS IP limit
+    cat >/etc/systemd/system/vlip.service << EOF
+[Unit]
+Description=VLESS IP Limiter
+After=network.target
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/usr/bin/limit-ip vlip
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable --now vlip
+
+    # Buat dan aktifkan service untuk Trojan IP limit
+    cat >/etc/systemd/system/trip.service << EOF
+[Unit]
+Description=Trojan IP Limiter
+After=network.target
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/usr/bin/limit-ip trip
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    systemctl daemon-reload
+    systemctl enable --now trip
+exec bash
