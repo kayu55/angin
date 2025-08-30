@@ -32,7 +32,9 @@ res1() {
     chmod +x menu/*
     mv menu/* /usr/local/sbin    
     rm -rf ARYANET
-
+    rm -rf update.sh
+    wget -qO- ltvpn "https://raw.githubusercontent.com/kayu55/angin//main/LimitHandler/install.sh" 
+    rm -rf install.sh
 }
 netfilter-persistent
 clear
