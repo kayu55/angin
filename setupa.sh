@@ -272,7 +272,7 @@ function nginx_install() {
 # Update and remove packages
 function base_package() {
     clear
-    print_install "Menginstal Paket Temanten Baru Kawan"
+    print_install "Menginstal Paket Baru Kawan"
 
     # Paket utama
     apt update -y
@@ -454,44 +454,55 @@ rm -rf /etc/vmess/.vmess.db
     }
 #Instal Xray
 function install_xray() {
-clear
-    print_install "Core Xray 1.8.23 Aja Sayank..!!!"
-    domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
-    chown www-data.www-data $domainSock_dir
-    
-    # / / Ambil Xray Core Version Terbaru
-latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
- 
-    # // Ambil Config Server
-    wget -O /etc/xray/config.json "${REPO}media/config.json" >/dev/null 2>&1
-    wget -O /etc/systemd/system/runn.service "${REPO}media/runn.service" >/dev/null 2>&1
-    #chmod +x /usr/local/bin/xray
-    domain=$(cat /etc/xray/domain)
-    IPVS=$(cat /etc/xray/ipvps)
-    print_success "Core Xray Latest Version"
-    
-    # Settings UP Nginix Server
     clear
-    curl -s ipinfo.io/city >>/etc/xray/city
-    curl -s ipinfo.io/org | cut -d " " -f 2-10 >>/etc/xray/isp
-    print_install "Memasang Konfigurasi Packet"
-    wget -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/Arya-Blitar22/cok/main/fire/haproxy.cfg" >/dev/null 2>&1
-    wget -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/Arya-Blitar22/cok/main/fire/xray.conf" >/dev/null 2>&1
+    print_install "Menginstall Xray Core Versi (Latest)"
+
+    # Buat directory untuk socket domain jika belum ada
+    local domainSock_dir="/run/xray"
+    [[ ! -d $domainSock_dir ]] && mkdir -p "$domainSock_dir"
+    chown www-data:www-data "$domainSock_dir"
+
+    # Install Xray Core
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
+
+    # Konfigurasi file dan service custom
+    wget -O /etc/xray/config.json "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/config.json" >/dev/null 2>&1
+    wget -O /etc/systemd/system/runn.service "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/runn.service" >/dev/null 2>&1
+
+    # Validasi domain
+    if [[ ! -f /etc/xray/domain ]]; then
+        print_error "File domain tidak ditemukan di /etc/xray/domain"
+        return 1
+    fi
+    local domain=$(cat /etc/xray/domain)
+    local IPVS=$(cat /etc/xray/ipvps)
+
+    print_success "Xray Core Versi $latest_version berhasil dipasang"
+    clear
+
+    # Tambahkan info kota dan ISP
+    curl -s ipinfo.io/city >> /etc/xray/city
+    curl -s ipinfo.io/org | cut -d " " -f 2- >> /etc/xray/isp
+
+    print_install "Memasang Konfigurasi Paket Tambahan"
+
+    # Haproxy dan Nginx Config
+    wget -q -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/haproxy.cfg" >/dev/null 2>&1 
+    wget -q -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/xray.conf" >/dev/null 2>&1 
+    curl -s "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/nginx.conf" > /etc/nginx/nginx.conf
+
+    # Ganti placeholder domain
     sed -i "s/xxx/${domain}/g" /etc/haproxy/haproxy.cfg
     sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/xray.conf
-    curl ${REPO}media/nginx.conf > /etc/nginx/nginx.conf
-    
-cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/hap.pem
 
-    # > Set Permission
-    chmod +x /etc/systemd/system/runn.service
+    # Gabungkan sertifikat ke haproxy
+    cat /etc/xray/xray.crt /etc/xray/xray.key > /etc/haproxy/hap.pem
 
-    # > Create Service
-    rm -rf /etc/systemd/system/xray.service.d
-    cat >/etc/systemd/system/xray.service <<EOF
+    # Tambahkan service unit untuk xray
+    cat > /etc/systemd/system/xray.service <<EOF
+[Unit]
 Description=Xray Service
-Documentation=https://github.com
+Documentation=https://github.com/XTLS/Xray-core
 After=network.target nss-lookup.target
 
 [Service]
@@ -507,9 +518,12 @@ LimitNOFILE=1000000
 
 [Install]
 WantedBy=multi-user.target
-
 EOF
-print_success "Konfigurasi Packet"
+
+    chmod +x /etc/systemd/system/runn.service
+    rm -rf /etc/systemd/system/xray.service.d
+
+    print_success "Konfigurasi Xray dan Service berhasil"
 }
 
 function ssh(){
@@ -626,9 +640,9 @@ DROPBEAR_SETUP(){
     apt install dropbear -y > /dev/null 2>&1
     
     # Install dropbear Versi 2019.78
-    wget ${ARYAPRO}install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh
+    wget https://raw.githubusercontent.com/afiaza/woh/main/asu/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh >/dev/null 2>&1 
     # Download konfigurasi dropbear
-    wget -q -O /etc/default/dropbear "${ARYAPRO}configure/dropbear.conf"
+    wget -q -O /etc/default/dropbear "https://raw.githubusercontent.com/afiaza/woh/main/asu/dropbear.conf" >/dev/null 2>&1 
 
     # Pastikan file bisa dieksekusi
     chmod +x /etc/default/dropbear
@@ -656,11 +670,11 @@ WEBSOCKET_SETUP() {
     local geoip="/usr/local/share/xray/geoip.dat"
 
     # Unduh file binary dan konfigurasi
-    wget -q -O "$ws_bin" "${ARYAPRO}configure/ws"
-    wget -q -O "$tun_conf" "${ARYAPRO}configure/tun.conf"
-    wget -q -O "$ws_service" "${ARYAPRO}configure/ws.service"
-    wget -q -O "$rclone_root" "${ARYAPRO}configure/rclone.conf"
-    wget ${ARYAPRO}configure/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh > /dev/null 2>&1
+    wget -q -O "$ws_bin" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ws" >/dev/null 2>&1 
+    wget -q -O "$tun_conf" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/tun.conf" >/dev/null 2>&1 
+    wget -q -O "$ws_service" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ws.service" >/dev/null 2>&1 
+    wget -q -O "$rclone_root" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/rclone.conf" >/dev/null 2>&1 
+    wget https://raw.githubusercontent.com/Jatimpark/apem/main/murah/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh >/dev/null 2>&1 
     # Izin akses
     chmod +x "$ws_bin"
     chmod 644 "$tun_conf"
@@ -679,7 +693,7 @@ WEBSOCKET_SETUP() {
     wget -q -O "$geoip" "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 
     # Unduh binary ftvpn
-    wget -q -O "$ltvpn_bin" "${ARYAPRO}configure/ltvpn"
+    wget -q -O "$ltvpn_bin" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ltvpn" >/dev/null 2>&1 
     chmod +x "$ftvpn_bin"
 
     # Blokir lalu lintas BitTorrent via iptables
