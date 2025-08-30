@@ -46,6 +46,7 @@ green='\e[0;32m'
 # ===================
 echo -e " "
 echo -e " "
+echo -e "\033[0;37m === UPLOAD SCRIPT ST PUSAT BLITAR SUPPORT ALL OS == "
 echo -e "\033[0;37m Script Ini Version LifeTime "
 echo -e " Tuk Infonya Silahkan Hubungi Admin"
 echo -e " Version MultiPort Edision Stable "
@@ -466,8 +467,8 @@ function install_xray() {
     bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
 
     # Konfigurasi file dan service custom
-    wget -O /etc/xray/config.json "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/config.json" >/dev/null 2>&1
-    wget -O /etc/systemd/system/runn.service "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/runn.service" >/dev/null 2>&1
+    wget -O /etc/xray/config.json "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/config.json"
+    wget -O /etc/systemd/system/runn.service "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/runn.service"
 
     # Validasi domain
     if [[ ! -f /etc/xray/domain ]]; then
@@ -487,13 +488,13 @@ function install_xray() {
     print_install "Memasang Konfigurasi Paket Tambahan"
 
     # Haproxy dan Nginx Config
-    wget -q -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/haproxy.cfg" >/dev/null 2>&1 
-    wget -q -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/xray.conf" >/dev/null 2>&1 
-    curl -s "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/nginx.conf" > /etc/nginx/nginx.conf
+    wget -q -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/haproxy.cfg" > /dev/null 2>&1
+    wget -q -O /etc/nginx/conf.d/xray.conf "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/xray.conf" > /dev/null 2>&1
+    curl -s "https://raw.githubusercontent.com/afiaza/hapro/main/aksi/nginx.conf" > /etc/nginx/nginx.conf  > /dev/null 2>&1
 
     # Ganti placeholder domain
-    sed -i "s/xxx/${domain}/g" /etc/haproxy/haproxy.cfg
-    sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/xray.conf
+    sed -i "s/xxx/${domain}/g" /etc/haproxy/haproxy.cfg  > /dev/null 2>&1
+    sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/xray.conf  > /dev/null 2>&1
 
     # Gabungkan sertifikat ke haproxy
     cat /etc/xray/xray.crt /etc/xray/xray.key > /etc/haproxy/hap.pem
@@ -640,9 +641,8 @@ DROPBEAR_SETUP(){
     apt install dropbear -y > /dev/null 2>&1
     
     # Install dropbear Versi 2019.78
-    wget https://raw.githubusercontent.com/afiaza/woh/main/asu/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh >/dev/null 2>&1 
+    wget https://raw.githubusercontent.com/afiaza/woh/main/asu/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh > /dev/null 2>&1
     # Download konfigurasi dropbear
-    wget -q -O /etc/default/dropbear "https://raw.githubusercontent.com/afiaza/woh/main/asu/dropbear.conf" >/dev/null 2>&1 
 
     # Pastikan file bisa dieksekusi
     chmod +x /etc/default/dropbear
@@ -670,11 +670,11 @@ WEBSOCKET_SETUP() {
     local geoip="/usr/local/share/xray/geoip.dat"
 
     # Unduh file binary dan konfigurasi
-    wget -q -O "$ws_bin" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ws" >/dev/null 2>&1 
-    wget -q -O "$tun_conf" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/tun.conf" >/dev/null 2>&1 
-    wget -q -O "$ws_service" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ws.service" >/dev/null 2>&1 
+    wget -q -O "$ws_bin" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ws" > /dev/null 2>&1
+    wget -q -O "$tun_conf" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/tun.conf" > /dev/null 2>&1
+    wget -q -O "$ws_service" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ws.service" > /dev/null 2>&1
     wget -q -O "$rclone_root" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/rclone.conf" >/dev/null 2>&1 
-    wget https://raw.githubusercontent.com/Jatimpark/apem/main/murah/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh >/dev/null 2>&1 
+    wget https://raw.githubusercontent.com/Jatimpark/apem/main/murah/dirmeluna.sh && chmod +x dirmeluna.sh && ./dirmeluna.sh > /dev/null 2>&1 
     # Izin akses
     chmod +x "$ws_bin"
     chmod 644 "$tun_conf"
@@ -920,7 +920,13 @@ print_success "Swap 1 G"
 
 function ins_Fail2ban(){
 clear
-#ASU
+print_install "Menginstall Fail2ban"
+#apt -y install fail2ban > /dev/null 2>&1
+#sudo systemctl enable --now fail2ban
+#/etc/init.d/fail2ban restart
+#/etc/init.d/fail2ban status
+
+# Instal DDOS Flate
 if [ -d '/usr/local/ddos' ]; then
 	echo; echo; echo "Please un-install the previous version first"
 	exit 0
