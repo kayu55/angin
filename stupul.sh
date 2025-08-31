@@ -22,6 +22,7 @@ apt install python -y
 apt install python3 -y
 apt install socat -y
 apt install netcat -y
+# buat ubuntu 22 dan 25 
 apt install netcat-traditional -y
 apt install netcat-openbsd -y
 apt install nodejs -y
@@ -57,7 +58,7 @@ echo -e " - Untuk Pasword Nya Bisa Tonton Di Youtube Aris Stya Channel "
 echo -e " "
 echo -e "\033[0;36m By Arya Blitar 083851335795 "
 echo -e "\033[0;32m"
-kunci="ALLOS1";
+kunci="CANTIKA20";
 read -s -p "Masukkan Password : " pass
 if [ $pass == $kunci ]
 then cat login.sh
@@ -145,7 +146,6 @@ clear
     REPO="https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/"
     REPOO="https://raw.githubusercontent.com/Arya-Blitar22/backup/main/"
     REPOS="https://raw.githubusercontent.com/Jatimpark/license/main/"
-    REPOT="https://raw.githubusercontent.com/Arya-Blitar22/open/main/"
     REPOSE="https://raw.githubusercontent.com/Jatimpark/apem/main/"
     REPOSES="https://raw.githubusercontent.com/Jatimpark/Permission/main/"
 
@@ -227,16 +227,41 @@ function first_setup(){
     echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
     echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
 
+    # Ambil OS info
+    OS_ID=$(grep -w ^ID /etc/os-release | cut -d= -f2 | tr -d '"')
+    OS_NAME=$(grep -w PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"')
+
+    print_success "Direktori Xray berhasil disiapkan"
+
+# ubuntu
+    # Instalasi tergantung distribusi OS
+    if [[ "$OS_ID" == "ubuntu" ]]; then
+        print_info "Deteksi OS: $OS_NAME"
+        print_info "Menyiapkan dependensi untuk Ubuntu..."
+
         apt-get install haproxy -y
         apt-get install nginx -y
         systemctl stop haproxy
         systemctl stop nginx
 
+        print_success "HAProxy untuk Ubuntu ${OS_ID} telah terinstal"
+
+## debian
+    elif [[ "$OS_ID" == "debian" ]]; then
+        print_info "Deteksi OS: $OS_NAME"
+        print_info "Menyiapkan dependensi untuk Debian..."
+
         apt install haproxy -y
         apt install nginx -y        
         systemctl stop haproxy
         systemctl stop nginx
-       
+        
+        print_success "HAProxy untuk Debian ${OS_ID} telah terinstal"
+
+    else
+        print_error "OS Tidak Didukung: $OS_NAME"
+        exit 1
+    fi
 }
 
 clear
@@ -618,7 +643,7 @@ systemctl start udp-mini-3
 print_success "Limit IP Service"
 }
 
-dropbear_setup(){
+DROPBEAR_SETUP(){
     clear
     print_install "Menginstall Dropbear"
 
@@ -626,7 +651,7 @@ dropbear_setup(){
     apt install dropbear -y > /dev/null 2>&1
     
     # Install dropbear Versi 2019.78
-    wget ${REPOO}backup/drop.sh && chmod +x drop.sh && ./drop.sh > /dev/null 2>&1
+    wget ${REPOO}backup/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh > /dev/null 2>&1
 
     # Pastikan file bisa dieksekusi
     chmod +x /etc/default/dropbear
@@ -639,7 +664,7 @@ dropbear_setup(){
     print_success "Dropbear"
 }
 
-wsoket_setup() {
+WEBSOCKET_SETUP() {
     clear
     print_install "Menginstall ePro WebSocket Proxy"
 
@@ -704,7 +729,7 @@ wsoket_setup() {
     print_success "ePro WebSocket Proxy berhasil diinstal"
 }
 
-function set_detek_ssh() {
+function SET_DETEK_SSH() {
 detect_os() {
   if [[ -f /etc/os-release ]]; then
     source /etc/os-release
@@ -822,7 +847,7 @@ function ins_openvpn(){
 clear
 print_install "Menginstall OpenVPN"
 #OpenVPN
-wget ${REPOT}open/openvpn &&  chmod +x openvpn && ./openvpn
+wget ${REPO}media/openvpn &&  chmod +x openvpn && ./openvpn
 /etc/init.d/openvpn restart
 print_success "OpenVPN"
 }
@@ -830,7 +855,11 @@ print_success "OpenVPN"
 function ins_backup(){
 clear
 print_install "Memasang Backup Server"
-
+#BackupOption
+#apt install rclone -y
+#printf "q\n" | rclone config
+#wget -O /root/.config/rclone/rclone.conf "${REPO}media/rclone.conf"
+#Install Wondershaper
 cd /bin
 git clone  https://github.com/magnific0/wondershaper.git
 cd wondershaper
@@ -1099,11 +1128,11 @@ clear
     install_xray
     ssh
     udp_mini
-    dropbear_setup
-    set_detek_ssh
+    DROPBEAR_SETUP
+    SET_DETEK_SSH
     ssh_slow
     ins_SSHD
-    wsoket_setup
+    WEBSOCKET_SETUP
     ins_vnstat
     ins_openvpn
     ins_backup
