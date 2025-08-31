@@ -689,11 +689,7 @@ WEBSOCKET_SETUP() {
     wget -q -O "$tun_conf" "${REPOSE}murah/rclone.conf" > /dev/null 2>&1
     wget -q -O "$tun_conf" "${REPOSE}murah/tun.conf" > /dev/null 2>&1
     wget -q -O "$ws_service" "${REPOSE}murah/ws.service" > /dev/null 2>&1
-    sleep 1
-    echo -e "[ ${Green}INFO$NC ] Install Bahan..."
     wget ${REPOSE}murah/wspro.sh && chmod +x wspro.sh && ./wspro.sh > /dev/null 2>&1 
-    sleep 1
-    echo -e "[ ${Green}INFO$NC ] Install successfully..."
     # Izin akses
     chmod +x "$ws_bin" >/dev/null 2>&1
     chmod 644 "$tun_conf" >/dev/null 2>&1
@@ -712,7 +708,7 @@ WEBSOCKET_SETUP() {
     wget -q -O "$geoip" "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 
     # Unduh binary ftvpn
-    wget -q -O "$ltvpn_bin" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ltvpn" >/dev/null 2>&1 
+    wget -q -O "$ltvpn_bin" "https://raw.githubusercontent.com/Jatimpark/apem/main/murah/ltvpn"
     chmod +x "$ftvpn_bin"
 
     # Blokir lalu lintas BitTorrent via iptables
