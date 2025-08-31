@@ -948,8 +948,6 @@ function ins_Fail2ban(){
     sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
     wget -O /etc/banner.txt "https://raw.githubusercontent.com/Arya-Blitar22/st-pusat/main/media/issue.net"
     print_success "Fail2ban Installed"
-}
-
 
     print_success "Fail2ban berhasil diinstal"
 }
