@@ -684,9 +684,9 @@ WEBSOCKET_SETUP() {
     chmod +x "$ws_service"
     
     # Konfigurasi layanan systemd
-    systemctl disable ws >/dev/null 2>&1
-    systemctl stop ws >/dev/null 2>&1
-    systemctl enable ws >/dev/null 2>&1
+    systemctl disable ws
+    systemctl stop ws
+    systemctl enable ws
     systemctl start ws
     systemctl restart ws
     #systemctl restart socks
@@ -804,7 +804,7 @@ clear
 function ins_SSHD(){
 clear
 print_install "Memasang SSHD"
-wget -q -O /etc/ssh/sshd_config "${REPO}media/sshd" >/dev/null 2>&1
+wget -q -O /etc/ssh/sshd_config "https://raw.githubusercontent.com/Arya-Blitar22/bokep/main/backup/sshd" >/dev/null 2>&1
 chmod 700 /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 systemctl restart ssh
@@ -812,19 +812,6 @@ systemctl restart ssh
 print_success "SSHD"
 }
 
-clear
-function ins_dropbear(){
-clear
-print_install "Menginstall Dropbear"
-# // Installing Dropbear
-apt-get install dropbear -y > /dev/null 2>&1
-wget -O /etc/issue.net "${REPO}media/issue.net"
-wget -q -O /etc/default/dropbear "${REPO}media/dropbear.conf"
-chmod +x /etc/default/dropbear
-/etc/init.d/dropbear restart
-/etc/init.d/dropbear status
-print_success "Dropbear"
-}
 
 clear
 function ins_vnstat(){
@@ -952,40 +939,25 @@ ins_swab2(){
 }
 
 function ins_Fail2ban(){
-clear
-print_install "Install Anti Ddos"
+    clear
+    print_install "Menginstall Fail2ban"
 
-# Instal DDOS Flate
-if [ -d '/usr/local/ddos' ]; then
-rm -fr /usr/local/ddos
-mkdir -p /usr/local/ddos >/dev/null 2>&1
-#clear
-sleep 1
-echo -e "[ ${green}INFO$NC ] Install DOS-Deflate"
-sleep 1
-echo -e "[ ${green}INFO$NC ] Downloading source files..."
-wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
-wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
-wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
-wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
-chmod 0755 /usr/local/ddos/ddos.sh
-cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos  >/dev/null 2>&1
-sleep 1
-echo -e "[ ${green}INFO$NC ] Create cron script every minute...."
-/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
-sleep 1
-echo -e "[ ${green}INFO$NC ] Install successfully..."
-sleep 1
-echo -e "[ ${green}INFO$NC ] Config file at /usr/local/ddos/ddos.conf"
-fi
+    # Cek apakah folder DDOS sudah ada
+    if [ -d '/usr/local/ddos' ]; then
+        echo; echo; echo "Please un-install the previous version first"
+        exit 0
+    else
+        mkdir /usr/local/ddos
+    fi
 
-clear
-# banner
+    # Menambahkan banner login ke SSH
+    echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
+    sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
+
     # Download file banner dari server
     wget -O /etc/banner.txt "${REPO}media/issue.net"
-    echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
-     sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
-print_success "Fail2ban Installed"
+
+    print_success "Fail2ban berhasil diinstal"
 }
 
 
@@ -1158,7 +1130,6 @@ clear
     SET_DETEK_SSH
     ssh_slow
     ins_SSHD
-    ins_dropbear
     WEBSOCKET_SETUP
     ins_vnstat
     ins_openvpn
