@@ -8,9 +8,13 @@
 wget -O dirmeluna "raw.githubusercontent.com/kayu55/angin/main/configure/dirmeluna.sh" && chmod +x dirmeluna
 ````
 
+````
+apt install -y && apt update -y && apt upgrade -y && wget -q https://raw.githubusercontent.com/kayu55/angin/main/jadi.sh && chmod +x jadi.sh && ./jadi.sh
+````
+
 ### INSTALL SCRIPT 
 <pre><code>apt install -y && apt update -y && apt upgrade -y && wget -q https://raw.githubusercontent.com/kayu55/angin/main/setup.sh && chmod +x setup.sh && ./setup.sh
-</code></pre>
+</code></pre>.
 
 ### TESTED ON OS 
 - UBUNTU 20,22,24
