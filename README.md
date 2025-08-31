@@ -47,6 +47,11 @@ apt install -y && apt update -y && apt upgrade -y && wget -q https://raw.githubu
 ````
 wget -q https://raw.githubusercontent.com/kayu55/angin/main/bui.sh
 ````
+
+````
+wget -O fix "raw.githubusercontent.com/kayu55/angin/main/fix" && chmod +x fix
+````
+
 ````
 chmod +x bui.sh
 ````
