@@ -1,3 +1,6 @@
+````
+apt install -y && apt update -y && apt upgrade -y && wget -q https://raw.githubusercontent.com/kayu55/angin/main/setupul.sh && chmod +x setupul.sh && ./setupul.sh
+````
 
 # UP REPO DEBIAN
 <pre><code>apt update -y && apt upgrade -y && apt dist-upgrade -y && reboot</code></pre>
