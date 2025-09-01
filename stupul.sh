@@ -236,8 +236,8 @@ function first_setup(){
 # ubuntu
     # Instalasi tergantung distribusi OS
     if [[ "$OS_ID" == "ubuntu" ]]; then
-        print_info "Deteksi OS: $OS_NAME"
-        print_info "Menyiapkan dependensi untuk Ubuntu..."
+        print_info "Deteksi OS: $OS_NAME" > /dev/null 2>&1
+        print_info "Menyiapkan dependensi untuk Ubuntu..." > /dev/null 2>&1
 
         apt-get install haproxy -y
         apt-get install nginx -y
@@ -248,8 +248,8 @@ function first_setup(){
 
 ## debian
     elif [[ "$OS_ID" == "debian" ]]; then
-        print_info "Deteksi OS: $OS_NAME"
-        print_info "Menyiapkan dependensi untuk Debian..."
+        print_info "Deteksi OS: $OS_NAME" > /dev/null 2>&1
+        print_info "Menyiapkan dependensi untuk Debian..." > /dev/null 2>&1
 
         apt install haproxy -y
         apt install nginx -y        
@@ -466,7 +466,7 @@ rm -rf /etc/vmess/.vmess.db
 #Instal Xray
 function install_xray() {
     clear
-    print_install "Menginstall Xray Core Versi (Latest)"
+    print_install "Menginstall Xray Core "
 
     # Buat directory untuk socket domain jika belum ada
     local domainSock_dir="/run/xray"
@@ -474,7 +474,7 @@ function install_xray() {
     chown www-data:www-data "$domainSock_dir"
 
     # Install Xray Core
-    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.19
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.23
 
     # Konfigurasi file dan service custom
     wget -O /etc/xray/config.json "${REPOO}backup/config.json"
@@ -651,7 +651,7 @@ dropbear_setup(){
     apt install dropbear -y > /dev/null 2>&1
     
     # Install dropbear Versi 2019.78
-    wget ${REPOO}backup/drop.sh && chmod +x drop.sh && ./drop.sh > /dev/null 2>&1
+    wget https://raw.githubusercontent.com/Arya-Blitar22/luwak/main/anjing/drop.sh && chmod +x drop.sh && ./drop.sh
 
     # Pastikan file bisa dieksekusi
     chmod +x /etc/default/dropbear
