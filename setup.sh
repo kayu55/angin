@@ -164,6 +164,18 @@ mkdir -p /etc/xray
 curl -s ifconfig.me > /etc/xray/ipvps
 touch /etc/xray/domain
 
+mkdir -p /usr/bin
+rm -fr /usr/local/bin/xray
+rm -fr /etc/nginx
+rm -fr /var/lib/arya/
+rm -fr /usr/bin/xray
+rm -fr /etc/xray
+rm -fr /usr/local/etc/xray
+mkdir -p /etc/nginx
+mkdir -p /var/lib/arya/
+mkdir -p /usr/bin/xray
+mkdir -p /etc/xray
+mkdir -p /usr/local/etc/xray
 mkdir -p /var/log/xray
 chown www-data:www-data /var/log/xray
 chmod +x /var/log/xray
@@ -174,9 +186,6 @@ touch /var/log/kern.log
 touch /var/log/mail.log
 touch /var/log/user.log
 touch /var/log/cron.log
-
-rm -fr /var/lib/arya
-mkdir -p /var/lib/arya >/dev/null 2>&1 
 
 
 print_success "Direktori dan file konfigurasi Xray berhasil dibuat"
@@ -361,7 +370,6 @@ fi
 # === Simpan Hasil Domain ke File (APPEND) ===
 echo "$RECORD" >> /etc/xray/domain 
 echo "$RECORD" >> ~/domain # /root/domain
-echo "IP=$SUB_DOMAIN" > /var/arya/ipvps.conf
 }
 
 SSL_SETUP() {
@@ -457,7 +465,6 @@ local main_dirs=(
 
     touch /etc/.{ssh,vmess,vless,trojan}.db
     echo "IP=" > /var/lib/arya/ipvps.conf
-    echo "IP=$domain" > /var/lib/arya/ipvps.conf
 }
 
 XRAY_SETUP() {
@@ -723,9 +730,9 @@ DROPBEAR_SETUP(){
     apt install dropbear -y > /dev/null 2>&1
     
     # Install dropbear Versi 2019.78
-    wget ${ARYAPRO}install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh
+    wget https://raw.githubusercontent.com/kayu55/angin/main/install-dropbear.sh && chmod +x install-dropbear.sh && ./install-dropbear.sh
     # Download konfigurasi dropbear
-    wget -q -O /etc/default/dropbear "${ARYAPRO}configure/dropbear.conf"
+    wget -q -O /etc/default/dropbear "https://raw.githubusercontent.com/kayu55/angin/main/configure/dropbear.conf"
 
     # Pastikan file bisa dieksekusi
     chmod +x /etc/default/dropbear
@@ -810,7 +817,7 @@ RCLONE_SETUP() {
 
     # Clone dan install wondershaper untuk manajemen bandwidth
     cd /bin
-    git clone https://github.com/LunaticTunnel/wondershaper.git
+    https://github.com/magnific0/wondershaper.git
     cd wondershaper
     sudo make install
     cd ~
@@ -900,7 +907,7 @@ FAIL2BAN_SETUP(){
     sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/banner.txt"@g' /etc/default/dropbear
 
     # Download file banner dari server
-    wget -O /etc/banner.txt "${ARYAPRO}banner/issue.net"
+    wget -O /etc/banner.txt "https://raw.githubusercontent.com/kayu55/angin/main/banner/issue.net"
 
     print_success "Fail2ban berhasil diinstal"
 }
